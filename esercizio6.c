@@ -15,9 +15,13 @@ do
 {
  printf("inserisci c:\n" );
  scanf("%d", &c);
+ if (c > a && c <b)
+ { 
 sentinella++;
 somma = somma + c;
-
+ }
+ 
+ 
 } while (c < b && c > a);
 media = (double) somma / (double) sentinella; 
 printf("La media è:\n", media );
