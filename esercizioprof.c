@@ -3,15 +3,15 @@
 int main(int argc, char *argv[])
 {
 
-    int n, sentinella;
+    int n, sentinella = 0;
 
     printf("inserisci un numero:\n");
     scanf("%d", &n);
-    sentinella = n;
+    
 
     do
     {
-        if (sentinella == n)
+        if (sentinella == 1)
         {
             printf("numeri:\n");
             printf("- %d \n", sentinella);
@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
         else
             printf("- %d \n", sentinella);
 
-        sentinella--;
-    } while (sentinella != 0);
+        sentinella++;
+    } while (sentinella <= n);
 
     return 0;
 }
