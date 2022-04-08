@@ -33,14 +33,11 @@ void ShowNumbers(int numbers[], int *i)
             printf("%d,", numbers[a]);
     }
 }
-void EnterLastNumber(int numbers[], int *sentinella, int *i)
+void EnterLastNumber(int numbers[], int *i)
 {
-    
-    *i = (*sentinella);
-    
-    (*i)++;
     printf("enter a number in the last position\n");
-    scanf("%d", &numbers[(*i)]);
+    scanf("%d", &numbers[*i]);
+    (*i)++;
 }
 
 void Modify(int numbers[])
@@ -58,21 +55,24 @@ void Modify(int numbers[])
         printf("unidentified number\n");
 }
 
-void delete (int numbers[], int *sentinella)
+void delete (int numbers[], int *i)
 {
     int SrchN, cnt = 0;
     printf("which number to delete?\n");
     scanf("%d", &SrchN);
 
-    for (int w = 0; w < *sentinella; w++)
+    for (int w = 0; w < (*i); w++)
     {
 
         if (numbers[w] == SrchN)
         {
-            cnt = w;
-            printf("enter the new number\n");
-            scanf("%d", &numbers[w]);
+            cnt = 2;
+            printf("number deleted\n");
         }
+        
+            if (cnt == 2)
+            numbers[w] = numbers[w + 1];
+        
     }
 
     if (cnt == 0)
@@ -103,7 +103,7 @@ void search(int numbers[], int *sentinella)
 int main(int argc, char *argv[])
 {
 
-    int DIM = 100;
+    int DIM = SHRT_MAX;
     int i = 0, sentinella = 0;
     int numbers[DIM];
 
@@ -126,13 +126,13 @@ int main(int argc, char *argv[])
             ShowNumbers(numbers, &i);
             break;
         case 2:
-            EnterLastNumber(numbers, &sentinella, &i);
+            EnterLastNumber(numbers, &i);
             break;
         case 3:
             Modify(numbers);
             break;
         case 4:
-            delete (numbers, &sentinella);
+            delete (numbers, &i);
             break;
         case 5:
             search(numbers, &sentinella);
