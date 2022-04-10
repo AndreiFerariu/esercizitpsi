@@ -74,10 +74,10 @@ void delete (int numbers[], int *i)
             numbers[w] = numbers[w + 1];
         
     }
-
+(*i)--;
     if (cnt == 0)
-
-        printf("number doesn't exists\n");
+{(*i)++;
+        printf("number doesn't exists\n");}
 }
 
 void search(int numbers[], int *sentinella)
@@ -100,6 +100,33 @@ void search(int numbers[], int *sentinella)
         printf("number doesn't exists\n");
 }
 
+void delNmbPos(int numbers[], int *i)
+{
+    
+int Srch, cnt = 0;
+    printf("which posistion to delete?\n");
+    scanf("%d", &Srch);
+
+    for (int w = 0; w < (*i); w++)
+    {
+
+        if (w == Srch)
+        {
+            cnt = 2;
+            printf("number deleted\n");
+        }
+        
+            if (cnt == 2)
+            numbers[w] = numbers[w + 1];
+        
+    }
+(*i)--;
+
+    
+}
+
+
+
 int main(int argc, char *argv[])
 {
 
@@ -118,6 +145,7 @@ int main(int argc, char *argv[])
         printf("press 3 to modify a number\n");
         printf("press 4 to delete a number\n");
         printf("press 5 to search a number\n");
+        printf("press 6 to delete a number with position\n");
         printf("press 0 to exit\n");
         scanf("%d", &p);
         switch (p)
@@ -137,8 +165,12 @@ int main(int argc, char *argv[])
         case 5:
             search(numbers, &sentinella);
             break;
+        case 6:
+            delNmbPos(numbers, &i);
+            break;
+            
         }
-    } while (p > 0 && p <= 5);
+    } while (p > 0 && p <= 6);
 
     return 0;
 }
