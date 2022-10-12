@@ -24,24 +24,19 @@ void inserisci(int n, int array[])
 
 void stampa(int n, int array[])
 {
-    printf("numeri dell'array:\n\n");
     for (int i = 0; i < n; i++)
-        printf("%d", array[i]);
+        printf("%d,", array[i]);
 }
 void stampa_inversa(int n, int array[])
 {
-    int z = 0, b = 0;
-    printf("numeri inversi dell'array:\n\n");
-    for (int i = 0; i <n+1%2; i++, b--)
+    int z = 0, b = n - 1;
+    for (int i = 0; i < n / 2; i++, b--)
     {
         z = array[i];
         array[i] = array[b];
         array[b] = z;
-
-
     }
     stampa(n, array);
-        
 }
 void somma_media(int n, int array[], int *somma, double *media)
 {
@@ -50,8 +45,7 @@ void somma_media(int n, int array[], int *somma, double *media)
     {
         *somma = *somma + array[i];
     }
-    *media = *somma / n+1;
-   
+    *media = *somma / n + 1;
 }
 void stampa_pari(int n, int array[])
 {
@@ -88,17 +82,18 @@ int ricerca(int n, int array[], int *indice)
     return valore_ricerca;
 }
 
-void elimina(int n, int array[], int *indice)
+void elimina(int *n, int array[], int *indice, int trovato)
 {
-    int trovato = 0;
-    printf("che numero vuoi eliminare?\n");
-    trovato = ricerca(n, array, indice);
     if (trovato != 0)
     {
-        for (int i = *indice; i < n; i++)
+        for (int i = *indice; i < *n; i++)
         {
-            array[i] = array[i + 1];
+            if (i < *n)
+                array[i] = array[i + 1];
+            if (i == n - 1)
+                array[i] = 0;
         }
+        (*n)--;
     }
 
     else
@@ -108,7 +103,7 @@ void elimina(int n, int array[], int *indice)
 void scambia(int n, int array[])
 {
     int z = 0;
-    if (n % 2 == 0)
+    if (n % 2 != 0)
     {
         for (int i = 0; i < n; i++)
         {
@@ -133,87 +128,102 @@ void scambia(int n, int array[])
 
 void crescente(int n, int array[])
 {
-    int z = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (array[i] > array[i + 1])
-            z = array[i];
-        array[i] = array[i + 1];
-        array[i + 1] = z;
-    }
-}
-void decrescente(int n, int array[])
-{
-    int z = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (array[i] < array[i + 1])
-            z = array[i];
-        array[i] = array[i + 1];
-        array[i + 1] = z;
-    }
-}
 
-int main(int argc, char *argv[])
-{
-    int DIM = 0, scelta = 0, somma = 0, presente = 0, indice = 0, scelta2 = 0;
-    double media = 0;
-    printf("quanti numeri vuoi inserire?\n");
-    scanf("%d", &DIM);
-    printf("inserisci numeri\n");
-    int array[DIM];
-    inserisci(DIM, array);
-    do
-    {
-        menu();
-        scanf("%d", &scelta);
+    int temp = 0;
 
-        switch (scelta)
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int k = 0; k < n - 1 - i; k++)
         {
-        case 1:
-            stampa(DIM, array);
-            break;
-        case 2:
-            stampa_inversa(DIM, array);
-            break;
-        case 3:
-            somma_media(DIM, array, &somma, &media); 
-            printf("la somma è %d", somma);
-             printf("la media è %f", media);
-            break;
-        case 4:
-            stampa_pari(DIM, array);
-            break;
-        case 5:
-            stampa_dispari(DIM, array);
-            break;
-        case 6:
-            printf("che numero vuoi cercare?:\n\n");
-            presente = ricerca(DIM, array, &indice);
-            if (presente != 0)
-                printf("valore presente e trovato %d volte\n", presente);
-            else
-                printf("valore non presente\n");
-        case 7:
-            elimina(DIM, array, &indice);
+            if (array[k] > array[k + 1])
             {
+                temp = array[k];
+                array[k] = array[k + 1];
+                array[k + 1] = temp;
+            }
+        }
+    }
+}
+    void decrescente(int n, int array[])
+    {
+        int temp = 0;
+        for (int i = 0; i < n - 1; i++)
+        {
+            for (int k = 0; k < n - 1 - i; k++)
+            {
+                if (array[k] < array[k + 1])
+                {
+                    temp = array[k];
+                    array[k] = array[k + 1];
+                    array[k + 1] = temp;
+                }
+            }
+        }
+    }
+
+    int main(int argc, char *argv[])
+    {
+        int DIM = 0, scelta = 0, somma = 0, presente = 0, indice = 0, scelta2 = 0;
+        double media = 0;
+        printf("quanti numeri vuoi inserire?\n");
+        scanf("%d", &DIM);
+        printf("inserisci numeri\n");
+        int array[DIM];
+        inserisci(DIM, array);
+        do
+        {
+            menu();
+            scanf("%d", &scelta);
+
+            switch (scelta)
+            {
+            case 1:
+                printf("numeri dell'array:\n\n");
+                stampa(DIM, array);
+                break;
+            case 2:
+                printf("numeri inversi dell'array:\n\n");
+                stampa_inversa(DIM, array);
+                break;
+            case 3:
+                somma_media(DIM, array, &somma, &media);
+                printf("la somma è %d\n", somma);
+                printf("la media è %f\n", media);
+                break;
+            case 4:
+                stampa_pari(DIM, array);
+                break;
+            case 5:
+                stampa_dispari(DIM, array);
+                break;
+            case 6:
+                printf("che numero vuoi cercare?:\n\n");
+                presente = ricerca(DIM, array, &indice);
+                if (presente != 0)
+                    printf("valore presente e trovato %d volte\n", presente);
+                else
+                    printf("valore non presente\n");
+                break;
+            case 7:
+             printf("che numero vuoi eliminare?\n");
+              int trovato = ricerca(n, array, indice);
+                elimina(&DIM, array, &indice, trovato);
+                break;
 
             case 8:
                 scambia(DIM, array);
+                break;
             case 9:
-                do
-                {
-                    printf("1 = decrescente\n 2 = crescente\n");
-                    scanf("%d", &scelta);
-                    if (scelta2 == 1)
-                        decrescente(DIM, array);
-                    if (scelta2 == 2)
-                        crescente(DIM, array);
-                } while (scelta2 != 1 || scelta2 != 2);
+                printf("1 = decrescente\n 2 = crescente\n");
+                scanf("%d", &scelta2);
+                if (scelta2 == 1)
+                    decrescente(DIM, array);
+                if (scelta2 == 2)
+                    crescente(DIM, array);
+                break;
             }
-        }
 
-       
-    }while (scelta != 10);
-     return 0;    
-}
+        } while (scelta != 10);
+        return 0;
+    }
+
