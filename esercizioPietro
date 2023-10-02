@@ -1,0 +1,10 @@
+
+
+ ```<?php
+
+$abominio = yaml_parse_file("in.yaml");
+
+$json = json_encode($abominio);
+
+$xml = xmlrpc_encode($abominio);
+```
